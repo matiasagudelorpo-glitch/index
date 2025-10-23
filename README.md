@@ -1,1 +1,381 @@
+[MatiasAgudeloRestrepo.html](https://github.com/user-attachments/files/23101628/MatiasAgudeloRestrepo.html)
 
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Camisas y Juego Triqui</title>
+<style>
+/* --- Estilos generales --- */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #FF0000;
+  margin: 0;
+  padding: 0;
+}
+h1 { color: #FF0000cc; text-align: center; }
+p { font-size: 16px; text-align: center; }
+
+/* --- Barra de pestañas --- */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  background: #111;
+  border-bottom: 2px solid #FF0000;
+  flex-wrap: wrap;
+}
+.tab-bar button {
+  background: none;
+  color: #FF0000;
+  border: none;
+  padding: 14px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.tab-bar button.active {
+  background: #FF0000;
+  color: #fff;
+  border-radius: 6px 6px 0 0;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* --- Portada --- */
+.portada-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+.portada-section img {
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255,0,0,0.5);
+}
+
+/* --- Estilos Camisas --- */
+.camisas-section {
+  text-align: center;
+  padding: 30px 10px;
+}
+.camisas-section img {
+  margin: 10px;
+  border-radius: 10px;
+}
+
+/* --- Estilos del juego Triqui --- */
+:root {
+  --bg: #dff4ff;
+  --board: #ffffff;
+  --accent: #0b65a8;
+  --cell: #e6f7ff;
+}
+.triqui-container {
+  background: var(--bg);
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width: 100%;
+  max-width: 920px;
+  background: linear-gradient(180deg, #fff 0%, #f6fdff 100%);
+  box-shadow: 0 8px 30px rgba(2, 27, 47, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+header { background: var(--accent); color: white; padding: 18px 22px; }
+header h2 { margin: 0; font-size: 20px; }
+main { display: grid; grid-template-columns: 1fr 420px; gap: 18px; padding: 18px; }
+@media (max-width:880px) { main { grid-template-columns: 1fr; } }
+.card {
+  background: var(--board);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(11, 101, 168, 0.06);
+}
+label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #234;
+}
+input[type=text], select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d7eefb;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.controls { display: flex; gap: 8px; align-items: center; }
+button {
+  background: var(--accent);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(11, 101, 168, 0.18);
+}
+.game-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.status {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff, #f2fbff);
+  min-width: 220px;
+  text-align: center;
+  font-weight: 600;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  grid-template-rows: repeat(3, 120px);
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #aee8ff, #eaf9ff);
+}
+@media (max-width:520px) {
+  .board { grid-template-columns: repeat(3, 88px); grid-template-rows: repeat(3, 88px); }
+}
+.cell {
+  background: var(--cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: inset 0 -4px 8px rgba(2, 27, 47, 0.02);
+}
+.cell.disabled { cursor: not-allowed; opacity: 0.7; }
+.winner { background: linear-gradient(90deg, #fff3b0, #ffd9a8); }
+footer { padding: 12px 18px; text-align: right; color: #234; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Barra de pestañas -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="portada">Portada</button>
+  <button class="tab-btn" data-tab="inicio">Inicio</button>
+  <button class="tab-btn" data-tab="formulario">Formulario</button>
+  <button class="tab-btn" data-tab="juego">Juego</button>
+</div>
+
+<!-- Pestaña: Portada -->
+<section id="portada" class="tab-content active">
+  <div class="portada-section">
+    <h1>Camisas y Juego Triqui</h1>
+    <p>Bienvenido a la página donde podrás ver camisas elegantes y jugar al clásico triqui.</p>
+    <img src="https://arturocalle.vteximg.com.br/arquivos/ids/693465-800-1065/HOMBRE-CAMISA-10136852-AZUL-730_1.jpg" width="400" height="400" alt="Camisa elegante">
+    <p>Explora las pestañas para ver las camisas, llenar el formulario e iniciar el juego.</p>
+  </div>
+</section>
+
+<!-- Pestaña: Inicio -->
+<section id="inicio" class="tab-content">
+  <div class="camisas-section">
+    <h1>CAMISAS</h1>
+    <p>Mi página muestra unas camisas bonitas y elegantes.</p>
+    <a href="https://poloclub.com.co/collections/camisas-para-hombre" target="_blank" style="color:#FF0000;">Camisas Polo</a>
+    <br><br>
+    <img src="https://arturocalle.vteximg.com.br/arquivos/ids/693465-800-1065/HOMBRE-CAMISA-10136852-AZUL-730_1.jpg" width="400" height="400">
+    <p>Camisas elegantes para hombres — Valor: $75.000</p>
+    <img src="https://m.media-amazon.com/images/I/61YYSrJ15+L._AC_SX466_.jpg" width="400" height="400">
+    <p>Camisas elegantes para mujer — Valor: $65.000</p>
+  </div>
+</section>
+
+<!-- Pestaña: Formulario -->
+<section id="formulario" class="tab-content">
+  <div class="triqui-container">
+    <div class="container">
+      <header><h2>Formulario de inicio</h2></header>
+      <main>
+        <section>
+          <div class="card">
+            <h3>Inicio — Formulario</h3>
+            <form id="startForm">
+              <label for="playerX">Nombre jugador X</label>
+              <input id="playerX" name="playerX" type="text" placeholder="Jugador X" value="Jugador X" />
+              <label for="playerO">Nombre jugador O</label>
+              <input id="playerO" name="playerO" type="text" placeholder="Jugador O" value="Jugador O" />
+              <label for="first">Comienza</label>
+              <select id="first">
+                <option value="X">X</option>
+                <option value="O">O</option>
+              </select>
+              <div class="controls">
+                <button type="button" id="btnStart">Iniciar juego</button>
+                <button type="button" id="btnReset" class="secondary">Reiniciar formulario</button>
+              </div>
+            </form>
+          </div>
+          <div style="height:14px"></div>
+          <div class="card">
+            <h3>Instrucciones rápidas</h3>
+            <p>Rellena los nombres, elige quién empieza y pulsa <strong>Iniciar juego</strong>. Toca una casilla para colocar X u O.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- Pestaña: Juego -->
+<section id="juego" class="tab-content">
+  <div class="triqui-container">
+    <div class="container">
+      <header><h2>Triqui — Juego</h2></header>
+      <main>
+        <aside class="game-wrap">
+          <div class="status card" id="status">Pulsa "Iniciar juego" para comenzar</div>
+          <div class="board card" id="board"></div>
+          <div style="display:flex;gap:8px">
+            <button id="btnNew">Nuevo juego</button>
+            <button id="btnClear" class="secondary">Limpiar tablero</button>
+          </div>
+        </aside>
+      </main>
+      <footer>Hecho con ♥ — Fondo azul claro.</footer>
+    </div>
+  </div>
+</section>
+
+<script>
+// --- Control de pestañas ---
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(sec => sec.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// --- Lógica del juego triqui ---
+const boardEl = document.getElementById('board');
+const statusEl = document.getElementById('status');
+const startForm = document.getElementById('startForm');
+const btnStart = document.getElementById('btnStart');
+const btnReset = document.getElementById('btnReset');
+const btnNew = document.getElementById('btnNew');
+const btnClear = document.getElementById('btnClear');
+
+let state = {
+  cells: Array(9).fill(null),
+  turn: 'X',
+  running: false,
+  players: { X: 'Jugador X', O: 'Jugador O' }
+};
+
+function makeBoard() {
+  boardEl.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const c = document.createElement('div');
+    c.className = 'cell';
+    c.setAttribute('data-i', i);
+    c.addEventListener('click', onCellClick);
+    boardEl.appendChild(c);
+  }
+}
+function onCellClick(e) {
+  if (!state.running) return;
+  const i = Number(e.currentTarget.dataset.i);
+  if (state.cells[i]) return;
+  state.cells[i] = state.turn;
+  render();
+  const winner = checkWinner(state.cells);
+  if (winner) {
+    state.running = false;
+    highlightWin(winner.line);
+    statusEl.textContent = `${state.players[winner.player]} (${winner.player}) gana!`;
+    return;
+  }
+  if (state.cells.every(Boolean)) {
+    state.running = false;
+    statusEl.textContent = 'Empate.';
+    return;
+  }
+  state.turn = state.turn === 'X' ? 'O' : 'X';
+  statusEl.textContent = `${state.players[state.turn]} — Turno de ${state.turn}`;
+}
+function render() {
+  const cells = boardEl.querySelectorAll('.cell');
+  cells.forEach((el, idx) => {
+    el.textContent = state.cells[idx] || '';
+    el.classList.toggle('disabled', !!state.cells[idx]);
+  });
+}
+function checkWinner(cells) {
+  const lines = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+  for (const line of lines) {
+    const [a,b,c] = line;
+    if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+      return { player: cells[a], line };
+    }
+  }
+  return null;
+}
+function highlightWin(line) {
+  line.forEach(i => {
+    const el = boardEl.querySelector(`[data-i='${i}']`);
+    if (el) el.classList.add('winner');
+  });
+}
+
+btnStart.addEventListener('click', () => {
+  const pX = document.getElementById('playerX').value.trim() || 'Jugador X';
+  const pO = document.getElementById('playerO').value.trim() || 'Jugador O';
+  const first = document.getElementById('first').value || 'X';
+  state.players.X = pX;
+  state.players.O = pO;
+  state.turn = first;
+  state.cells = Array(9).fill(null);
+  state.running = true;
+  render();
+  statusEl.textContent = `${state.players[state.turn]} — Turno de ${state.turn}`;
+});
+btnReset.addEventListener('click', () => {
+  startForm.reset();
+  document.getElementById('playerX').value = 'Jugador X';
+  document.getElementById('playerO').value = 'Jugador O';
+});
+btnNew.addEventListener('click', () => {
+  state.cells = Array(9).fill(null);
+  state.running = false;
+  render();
+  boardEl.querySelectorAll('.cell').forEach(c => c.classList.remove('winner'));
+  statusEl.textContent = 'Pulsa "Iniciar juego" para comenzar';
+});
+btnClear.addEventListener('click', () => {
+  if (!state.running) return;
+  state.cells = Array(9).fill(null);
+  render();
+  statusEl.textContent = `${state.players[state.turn]} — Turno de ${state.turn}`;
+});
+makeBoard();
+render();
+</script>
+</body>
+</html>
